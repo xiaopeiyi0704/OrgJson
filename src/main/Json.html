@@ -1,0 +1,128 @@
+<html>
+
+<head>
+    <script>
+        function parse1(){
+            var txt = '{"name":"John", "age":30, "city":"New York", "cars":["ford", "chevy", "dodge"]}'
+            var obj = JSON.parse(txt);
+            document.getElementById("content").innerHTML = obj.name + ", " + obj.age+ ", " + obj.cars;
+
+        }
+
+        function parse2(){
+
+            var txt = '{"name":"John", "age":30, "city":"New York", "cars":["ford", "chevy", "dodge"]}'
+            var obj = JSON.parse(txt);
+            document.getElementById("content").innerHTML = obj.name + ", " + obj.age+ ", " + obj.cars[0];
+        }
+
+        function parse3(){
+            //var txt='{"person":[{"cars":["ford","chevy","dodge"],"city":"New York","hobbies":[{"hobby":"running"},{"hobby":"hiking"},{"hobby":"biking"}],"name":"John","age":31},{"cars":["audi","bmw","porche"],"city":"Atlanta","hobbies":[{"hobby":"eating"},{"hobby":"drinking"},{"hobby":"sleeping"}],"name":"Mike","age":28}]}'
+            var txt='{"person":[{"name":"Jonh","age":31,"city":"New York","cars":["ford","chevy","dodge"],"hobbies":[{"hobby":"running"},{"hobby":"hiking"},{"hobby":"biking"}]},{"name":"Mike","age":28,"city":"Atlanta","cars":["audi","bmw","porche"],"hobbies":[{"hobby":"eating"},{"hobby":"drinking"},{"hobby":"sleeping"}]}]}';
+            var obj = JSON.parse(txt);
+            var result="";
+            for(i=0;i<obj.person.length;i++){
+                //get one person from person array
+                var person=obj.person[i];
+                result=result+person.name + ", " + person.age+ ", " + person.cars;
+
+                for(j=0;j<person.hobbies.length;j++){
+
+                    //get hobby from hobby array
+                    var hobby=person.hobbies[j].hobby;
+                    result=result+", "+hobby;
+
+                }
+                result=result+"<br/>";
+
+            }
+            document.getElementById('content').innerHTML= result;
+        }
+
+
+        function parse4(){
+            var JSONObj={}; //top level
+            JSONObj.person=[]; //person is an array in JSONObject
+            JSONObj.person.hobbies=[] //hobbies in person is an array in JSONObject
+            var person=[]; //person array in local
+            var hobbies=[];//hobbies array for 1st person in local
+            var hobbies2=[];//hobbies array for 2nd person in local
+            var cars1=["ford", "chevy", "dodge"];
+            var cars2=["audi", "bmw", "porche"];
+
+            //start the first person
+            hobby1={
+                "hobby": "running"
+            };
+            hobbies.push(hobby1);
+
+            hobby2={
+                "hobby": "hiking"
+            };
+            hobbies.push(hobby2);
+
+            hobby3={
+                "hobby": "biking"
+            };
+            hobbies.push(hobby3);
+
+            p={
+                "name": "Jonh",
+                "age": 31,
+                "city": "New York",
+                "cars": cars1,
+                "hobbies": hobbies
+            };
+            person.push(p);
+
+
+            //start the second person
+            hobby4={
+                "hobby": "eating"
+            };
+            hobbies2.push(hobby4);
+
+            hobby5={
+                "hobby": "drinking"
+            };
+            hobbies2.push(hobby5);
+
+            hobby6={
+                "hobby": "sleeping"
+            };
+            hobbies2.push(hobby6);
+            p2={
+                "name": "Mike",
+                "age": 28,
+                "city": "Atlanta",
+                "cars": cars2,
+                "hobbies": hobbies2
+            };
+            person.push(p2);
+
+            //add local person array to json
+            JSONObj.person=person;
+            document.getElementById('content').innerHTML=JSON.stringify(JSONObj);
+        }
+
+    </script>
+</head>
+
+
+<body>
+<br/>
+<br/>
+<input type='button' value="ParseWithFullStringArray" onclick='parse1()'/><br/><br/>
+<input type='button' value="ParseWithSpecifiedStringInArray" onclick='parse2()'/><br/><br/>
+<input type='button' value="ParseWithFullObjectArray" onclick='parse3()'/><br/><br/>
+<input type='button' value="Create" onclick='parse4()'/><br/><br/>
+
+<br/>
+<br/>
+<br/>
+<div id='content'></div>
+</body>
+
+
+
+<html>
